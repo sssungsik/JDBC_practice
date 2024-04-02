@@ -1,0 +1,10 @@
+@charset "UTF-8";
+
+input {
+	background-color: skyblue;
+}
+
+input:hover {
+	background-color: blue;
+	transition: ease 0.25s;
+}
