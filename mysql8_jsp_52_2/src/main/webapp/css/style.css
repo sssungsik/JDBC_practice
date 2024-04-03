@@ -1,10 +1,12 @@
 @charset "UTF-8";
 
 input {
-	background-color: skyblue;
+	background-color: #e2f2fa;
+	border-radius: 4px;
 }
 
 input:hover {
-	background-color: blue;
+	background-color: #c9e7f5;
 	transition: ease 0.25s;
 }
+
