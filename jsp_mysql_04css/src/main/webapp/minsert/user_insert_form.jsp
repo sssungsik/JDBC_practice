@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>최성식도박사이트 회원가입</title>
-<link href="../css/style.css" rel="stylesheet" type="text/css">
+<link href="../css/main.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 	<div class=user-insert>

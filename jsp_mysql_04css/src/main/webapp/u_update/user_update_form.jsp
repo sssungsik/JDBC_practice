@@ -4,27 +4,23 @@
 <%@ page import = "java.sql.DriverManager" %>
 <%@ page import = "java.sql.Connection" %>
 <%@ page import = "java.sql.PreparedStatement" %>
-<%@ page import = "java.sql.ResultSet" %>  <!-- DB결과물 보이는 것 (select 등) 에만 사용 -->
+<%@ page import = "java.sql.ResultSet" %>
 <%@ page import = "java.sql.SQLException" %>
-
-<%@ include file="/minsert/user_insert_form.jsp" %>
-
-
+<html>
+<head>
 <link href="../css/main.css" rel="stylesheet" type="text/css">
 
-
-
-
+</head>
+<body>
 <div class = user-list>
-<table  width="80%" border="1">
-<h1>도박사이트 회원목록</h1>
+	<form action="<%=request.getContextPath()%>/u_update/user_update_action.jsp" method="post"> 
+		<table  width="80%" border="1">
+		<h1>회원수정</h1>
 
-	<thead>
-	<tr>
-		<th>아이디</th><th>비번</th><th>권한</th><th>이름</th><th>이메일</th><th>휴대폰</th><th>주소</th><th>수정</th><th>삭제</th>
-	</tr>
-	</thead>
+
 <%
+	String sendId = request.getParameter("sendId");
+
 	Connection conn = null;
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
@@ -36,7 +32,7 @@
 		String dbPass = "dbpw04css";
 		conn = DriverManager.getConnection(jdbcDriver, dbUser, dbPass);
 		System.out.println(conn + "<-- conn user_list.jsp");
-		pstmt = conn.prepareStatement("SELECT * FROM tb_user");
+		pstmt = conn.prepareStatement("SELECT * FROM tb_user WHERE u_id = '" + sendId + "';" );
 		rs = pstmt.executeQuery();
 		System.out.println(rs + "<-- rs user_list.jsp");
 		//System.out.println(rs.next() + "<-- rs.next() user_list.jsp");
@@ -44,19 +40,28 @@
 			System.out.println("while 반복문 실행");
 %>
 	
+	<thead>
+	<tr>
+		<th>아이디</th><th>비번</th><th>권한</th><th>이름</th><th>이메일</th><th>휴대폰</th><th>주소</th><th>수정</th>
+	</tr>
+	</thead>
+	
 		<tbody>
 		<tr>
-			<td><%= rs.getString("u_id")%></td>
-			<td><%= rs.getString("u_pw")%></td>
-			<td><%= rs.getString("u_level")%></td>
-			<td><%= rs.getString("u_name")%></td>
-			<td><a href="#"><%= rs.getString("u_email")%></a></td>
-			<td><%= rs.getString("u_phone")%></td>
-			<td><%= rs.getString("u_addr")%></td>
-			<td> <a href=" <%= request.getContextPath() %>/u_update/user_update_form.jsp?sendId=<%= rs.getString("u_id")%>">수정</a></td>
-			<td> <a href=" <%= request.getContextPath() %>/u_delete/user_delete.jsp?sendId=<%= rs.getString("u_id")%>">삭제</a></td>
+			<td><input type="text" name="u_id" value=<%= rs.getString("u_id")%> readonly></td>
+			<td><input type="text" value=<%= rs.getString("u_pw")%> name="u_pw"></td>
+			<td><select id="userGrade"  name="u_level">
+ 			 <option value="판매자">판매자</option>
+ 			 <option value="구매자">구매자</option>
+ 			 <option value="관리자">관리자</option></select></td>
+			<td><input type="text" value=<%= rs.getString("u_name")%> name="u_name"></td>
+			<td><input type="email" value=<%= rs.getString("u_email")%> name="u_email"></td>
+			<td><input type="number"  value=<%= rs.getString("u_phone")%> name="u_phone"></td>
+			<td>	<input type="text"  value=<%= rs.getString("u_addr")%> name="u_addr"></td>
+			<td> <button type="submit" value="수정버튼">수정</button></td>
 		</tr>
 		</tbody>
+			
 <%		
 	}
 }catch(SQLException ex) {
@@ -73,7 +78,10 @@
 	
 	</table>
 	
+	
 
-
- 	
+</form>
+</div>
+</body>
+</html>
 
